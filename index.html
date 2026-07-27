@@ -423,22 +423,22 @@
 
   function finishQuiz() {
     clearInterval(timer);
-    finished = true;
-    elBar.style.width = "100%";
-    elTitle.textContent = "Quiz completed";
-    // Hide score/correct from users, but keep time (you can change this text if you want even less info)
-    elHelp.textContent = `Thanks! You completed the quiz in ${totalTimeSpent}s.`;
-    elAns.innerHTML = "";
+  finished = true;
+  elBar.style.width = "100%";
+  elTitle.textContent = "Quiz completed";
+  elHelp.textContent = `Thanks! You completed the quiz in ${totalTimeSpent}s.`;
+  elAns.innerHTML = "";
 
-    if (hasSubmitted()) {
-      btnSubmit.disabled = true;
-      setToast("You have already submitted the quiz this week.", "bad");
-    } else {
-      btnSubmit.disabled = false;
-      setToast("Only one submission is allowed per week.");
-    }
-    updateStats();
+  // Auto-submit immediately (still enforces once-per-week via localStorage)
+  if (hasSubmitted()) {
+    setToast("You have already submitted the quiz this week.", "bad");
+  } else {
+    setToast("Submitting…");
+    submitResult();
   }
+
+  updateStats();
+}
 
   async function submitResult() {
     if (hasSubmitted()) {
