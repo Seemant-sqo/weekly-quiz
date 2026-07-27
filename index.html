@@ -35,7 +35,6 @@
     header{ margin-bottom:18px; }
     h1{ margin:0 0 6px; font-size:34px; letter-spacing:.2px; }
     .subtitle{ margin:0; color:var(--muted); font-size:15px; }
-
     .card{
       display:inline-block;
       text-align:left;
@@ -47,7 +46,6 @@
       overflow:hidden;
     }
     .card-inner{ padding:18px; }
-
     .stats{
       display:flex;
       gap:12px;
@@ -64,7 +62,6 @@
       min-width:160px;
     }
     .pill b{ color:var(--text); font-weight:600; }
-
     .progress{
       height:10px; width:100%;
       border-radius:999px;
@@ -78,11 +75,9 @@
       background: linear-gradient(90deg, var(--accent2), var(--accent));
       transition: width .2s ease;
     }
-
     .q-title{ margin:0 0 6px; font-size:20px; line-height:1.25; text-align:center; white-space:pre-line; }
     .q-help{ margin:0 0 14px; color:var(--muted); font-size:13.5px; text-align:center; }
     .answers{ display:flex; flex-direction:column; gap:12px; }
-
     button.answer{
       text-align:left; width:100%;
       padding:14px 14px;
@@ -102,7 +97,6 @@
     button.answer:disabled{ cursor:not-allowed; opacity:.9; }
     .answer.good{ border-color: rgba(34,197,94,.45); background: rgba(34,197,94,.12); }
     .answer.bad{ border-color: rgba(239,68,68,.45); background: rgba(239,68,68,.10); }
-
     .row{
       display:flex; gap:10px;
       align-items:center; justify-content:flex-end;
@@ -121,7 +115,6 @@
     }
     .btn:hover{ border-color: rgba(140,170,255,.33); }
     .btn:disabled{ cursor:not-allowed; opacity:.55; }
-
     .toast{
       margin-top:10px;
       font-size:13px;
@@ -188,9 +181,12 @@
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       color: rgba(96,165,250,.95);
     }
+
+    /* Hide "Correct" and "Score" from users (still calculated/submitted) */
+    .pill.hide { display:none !important; }
   </style>
 </head>
-  
+
 <body>
   <div class="wrap">
     <header>
@@ -202,16 +198,15 @@
       <div class="card-inner">
         <div class="stats">
           <div class="pill">Question: <b id="statQ">1 / 5</b></div>
-          <div class="pill">Correct: <b id="statC">0</b></div>
+          <div class="pill hide">Correct: <b id="statC">0</b></div>
           <div class="pill">Time left: <b><span id="statT">30</span> s</b></div>
-          <div class="pill">Score: <b id="statS">0</b></div>
+          <div class="pill hide">Score: <b id="statS">0</b></div>
         </div>
 
         <div class="progress"><div class="bar" id="bar"></div></div>
 
         <h3 class="q-title" id="qTitle">Please enter your details to begin</h3>
         <p class="q-help" id="qHelp"></p>
-
         <div class="answers" id="answers"></div>
 
         <div class="row">
@@ -248,10 +243,8 @@
 (() => {
   const POWER_AUTOMATE_POST_URL =
     "https://default5e60f7a7d4104d38b87593ca12adc3.0e.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/899b9a3c914541c0af2719bf77613032/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=orFxomxolOpdOCpoEiZ4V-xVhRuhx8oNCAcIWGHFjCs";
-
   const ALLOWED_DOMAIN = "syensqo.com";
 
-  // UPDATED QUESTIONS (as provided)
   const QUIZ = [
     {
       text: "What does Phishing refer to?",
@@ -311,7 +304,6 @@
     return e.endsWith("@" + ALLOWED_DOMAIN);
   }
 
-  // One submission per week (tracked locally)
   function submissionKeyForThisWeek() {
     return `weeklyQuizSubmitted_${getISOWeekId(new Date())}`;
   }
@@ -329,7 +321,6 @@
   const elAns = document.getElementById("answers");
   const btnSubmit = document.getElementById("btnSubmit");
   const elToast = document.getElementById("toast");
-
   const modalBg = document.getElementById("modalBg");
   const modalForm = document.getElementById("modalForm");
   const modalName = document.getElementById("modalName");
@@ -352,15 +343,14 @@
   let timeLeft = secondsPerQuestion;
   let totalTimeSpent = 0;
   let finished = false;
-
   let userName = "";
   let userEmail = "";
 
   function updateStats() {
     elQ.textContent = `${Math.min(idx+1, QUIZ.length)} / ${QUIZ.length}`;
-    elC.textContent = `${correct}`;
+    elC.textContent = `${correct}`;  // still maintained (hidden)
     elT.textContent = `${timeLeft}`;
-    elS.textContent = `${score}`;
+    elS.textContent = `${score}`;    // still maintained (hidden)
     elBar.style.width = `${(idx / QUIZ.length) * 100}%`;
   }
 
@@ -390,7 +380,6 @@
     elTitle.textContent = q.text;
     elHelp.textContent = "Pick one answer. Faster completion yields a higher score.";
     elAns.innerHTML = "";
-
     q.options.forEach((opt, i) => {
       const b = document.createElement("button");
       b.className = "answer";
@@ -399,7 +388,6 @@
       b.addEventListener("click", () => choose(i, b));
       elAns.appendChild(b);
     });
-
     startTimer();
     updateStats();
   }
@@ -419,6 +407,7 @@
     } else {
       score += 10;
       btnEl.classList.add("bad");
+      // Do NOT highlight the correct answer
     }
 
     updateStats();
@@ -437,7 +426,8 @@
     finished = true;
     elBar.style.width = "100%";
     elTitle.textContent = "Quiz completed";
-    elHelp.textContent = `Your result: ${correct}/${QUIZ.length} correct • ${totalTimeSpent}s • score ${score}`;
+    // Hide score/correct from users, but keep time (you can change this text if you want even less info)
+    elHelp.textContent = `Thanks! You completed the quiz in ${totalTimeSpent}s.`;
     elAns.innerHTML = "";
 
     if (hasSubmitted()) {
@@ -481,14 +471,12 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
-
       if (!res.ok) {
         const t = await res.text().catch(()=> "");
         throw new Error(`HTTP ${res.status} ${res.statusText} ${t}`.slice(0, 300));
       }
-
       markSubmitted();
-      setToast("Only one submission is allowed per week.", "good");
+      setToast("Submitted. Only one submission is allowed per week.", "good");
     } catch (e) {
       btnSubmit.disabled = false;
       setToast(`Submit failed: <strong>${escapeHtml(e.message)}</strong>`, "bad");
@@ -513,7 +501,6 @@
     modalError.textContent = "";
     userName = name;
     userEmail = email;
-
     modalBg.style.display = "none";
     renderQuestion();
   });
@@ -521,7 +508,6 @@
   if (hasSubmitted()) {
     setToast("You have already submitted the quiz this week.", "bad");
   }
-
   updateStats();
 })();
 </script>
