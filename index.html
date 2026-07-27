@@ -418,8 +418,6 @@
     } else {
       score += 10;
       btnEl.classList.add("bad");
-      const buttons = [...document.querySelectorAll("button.answer")];
-      buttons[q.correctIndex]?.classList.add("good");
     }
 
     updateStats();
