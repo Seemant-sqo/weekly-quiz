@@ -246,42 +246,57 @@
   const ALLOWED_DOMAIN = "syensqo.com";
 
   const QUIZ = [
-    {
-      text: "Which is the largest ocean in the world?",
-      options: [
-        "Atlantic Ocean",
-        "Indian Ocean",
-        "Pacific Ocean",
-        "Arctic Ocean"
-      ],
-      correctIndex: 2
-    },
-    {
-      text: "What is the chemical formula of common salt?",
-      options: [
-        "H2O",
-        "CO2",
-        "NACL",
-        "O2"
-      ],
-      correctIndex: 2
-    },
-    {
-      text: "Which is the smallest prime number?",
-      options: ["0", "1", "2", "3"],
-      correctIndex: 2
-    },
-    {
-      text: "What is the value of 9 X 8?",
-      options: ["64", "72", "81", "89"],
-      correctIndex: 1
-    },
-    {
-      text: "Which continent is known as the Dark Continent?",
-      options: ["Africa", "Europe", "Asia", "South America"],
-      correctIndex: 0
-    }
-  ];
+  {
+    text: "What is a common sign of a spear‑phishing attempt?",
+    options: [
+      "Generic greeting like Dear customer",
+      "Highly personalized content referencing your role, project, or colleagues",
+      "Email sent during business hours",
+      "Use of a company logo"
+    ],
+    correctIndex: 1
+  },
+  {
+    text: "What is the primary security risk of password spraying?",
+    options: [
+      "Exploiting unpatched vulnerabilities",
+      "Trying many passwords against one account",
+      "Trying a few common passwords across many accounts to avoid lockouts",
+      "Hijacking browser sessions via cookies"
+    ],
+    correctIndex: 2
+  },
+  {
+    text: "A drive‑by download typically occurs when?",
+    options: [
+      "An attacker brute-forces SSH",
+      "A user installs a signed vendor update",
+      "A user visits a compromised website that silently exploits the browser or plugin",
+      "A user receives an encrypted email"
+    ],
+    correctIndex: 2
+  },
+  {
+    text: "Which is the BEST way to validate a link in an email ?",
+    options: [
+      "Trusting the display text if it looks correct",
+      "Clicking and seeing if the site has HTTPS",
+      "Hovering to inspect the full URL and checking domain carefully",
+      "Opening it on a mobile device instead"
+    ],
+    correctIndex: 2
+  },
+  {
+    text: "What should you do if you accidentally entered credentials into a suspicious site?",
+    options: [
+      "Wait to see if anything happens",
+      "Close the browser and continue working",
+      "Immediately change password, revoke sessions/tokens if possible, and report to security/IT",
+      "Message the attacker asking them to delete your data"
+    ],
+    correctIndex: 2
+  }
+];
 
   function getISOWeekId(d) {
     const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
