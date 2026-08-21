@@ -246,30 +246,55 @@
   const ALLOWED_DOMAIN = "syensqo.com";
 
   const QUIZ = [
-{
-    text: "Which country hosted the 2024 Summer Olympics?",
-    options: ["USA", "France", "Japan", "Brazil"],
+  {
+    text: "Which scenario BEST describes MFA fatigue (push bombing) and the right response?",
+    options: [
+      "Many password resets occur, approve MFA to stop alerts",
+      "Repeated MFA prompts you didn’t initiate; deny them and report immediately",
+      "MFA prompts happen after a reboot; approve to restore access",
+      "MFA prompts appear while traveling; disable MFA temporarily"
+    ],
     correctIndex: 1
   },
   {
-    text: "Who became the Prime Minister of the United Kingdom in July 2024?",
-    options: ["Boris Johnson", "Rishi Sunak", "Keir Starmer", "Liz Truss"],
+    text: "A vendor requests temporary access to troubleshoot a production issue. Which option is MOST secure and practical?",
+    options: [
+      "Share a generic admin account so multiple vendor engineers can collaborate",
+      "Allow access from any IP to avoid connectivity issues",
+      "Create a time-bound, least-privilege account with MFA and monitored access",
+      "Ask the vendor to use a personal email and password for traceability"
+    ],
     correctIndex: 2
   },
   {
-    text: "Which country’s presidential election in 2024 returned Vladimir Putin to office?",
-    options: ["Belarus", "Russia", "Serbia", "Turkey"],
-    correctIndex: 1
-  },
-  {
-    text: "Which country joined NATO most recently (as of 2024)?",
-    options: ["Ukraine", "Georgia", "Sweden", "Switzerland"],
+    text: "A developer wants to store an API key in a public Git repository but claims it’s low risk. What is the BEST response?",
+    options: [
+      "It’s fine if the key is rotated once per year",
+      "It’s fine if the repo is popular and well maintained",
+      "Don’t store secrets in code; use a secrets manager/secure vault and rotate the exposed key immediately",
+      "Obfuscate the key (e.g., Base64) before committing"
+    ],
     correctIndex: 2
   },
   {
-    text: "Which country led the G20 in 2024 (G20 presidency)?",
-    options: ["India", "Brazil", "South Africa", "Italy"],
-    correctIndex: 1
+    text: "You see a certificate warning (hostname mismatch) when accessing an internal web app. What should you do FIRST?",
+    options: [
+      "Proceed anyway; internal apps often have misconfigured certs",
+      "Refresh the page until the warning disappears",
+      "Capture the URL and report it; avoid entering credentials",
+      "Switch to incognito mode and try again"
+    ],
+    correctIndex: 2
+  },
+  {
+    text: "What is the MOST accurate statement about least privilege for IT admins?",
+    options: [
+      "Admins should have permanent Domain Admin to respond quickly",
+      "Privileges are unnecessary if the network is behind a firewall",
+      "Privileges should be granted only when needed, scoped to tasks, and removed/expired automatically where possible",
+      "Least privilege only applies to end users, not administrators"
+    ],
+    correctIndex: 2
   }
 ];
 
